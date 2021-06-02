@@ -26,8 +26,6 @@ impl Jsoninp {
     }
 }
 
-
-
 fn main() {
     let mut lst = vec![];
     let sysargs = std::env::args();
@@ -55,15 +53,11 @@ fn main() {
     // Beautify the Json and Output
     //let mut obj = json!({"Temp":1});
     for item in lst {
-        let json_inp = Jsoninp {inp:json!({format!("Arg {}",item[0]):{"Value":item[1], "Hex":item[2], "Url":item[3]}})};
+        let json_inp = Jsoninp {
+            inp: json!({format!("Arg {}",item[0]):{"Value":item[1], "Hex":item[2], "Url":item[3]}}),
+        };
         json_inp.beautify();
     }
 }
-
-
-
-
-
-
 
 //------
