@@ -2,6 +2,7 @@
 extern crate serde_json;
 extern crate hex;
 extern crate urlencoding;
+extern crate base64;
 
 struct UserIn {
     inp: String,
@@ -17,6 +18,19 @@ impl UserIn {
     }
     fn get_url(&self) -> String {
         format!("{}", urlencoding::encode(&self.inp.to_string()))
+    }
+    fn get_binary(&self) -> String {
+        // From Stack Overflow
+        let inp = &self.inp.to_string();
+        let mut inpbin = "".to_string();
+        for charl in inp.clone().into_bytes() {
+            inpbin += &format!("0{:b} ", charl);
+        }
+        //-------
+        format!("{}", inpbin.to_string())
+    }
+    fn get_base64(&self) -> String {
+        format!("{}", base64::encode(&self.inp.to_string()))
     }
 }
 
@@ -43,6 +57,8 @@ fn main() {
                 x,
                 user_input.get_hex().to_string(),
                 user_input.get_url().to_string(),
+                user_input.get_binary().to_string(),
+                user_input.get_base64().to_string(),
             ]);
             iter += 1;
         } else {
@@ -54,7 +70,7 @@ fn main() {
     //let mut obj = json!({"Temp":1});
     for item in lst {
         let json_inp = Jsoninp {
-            inp: json!({format!("Arg {}",item[0]):{"Value":item[1], "Hex":item[2], "Url":item[3]}}),
+            inp: json!({format!("Arg {}",item[0]):{"Value":item[1], "Hex":item[2], "Url":item[3], "Binary":item[4], "Base64":item[5]}}),
         };
         json_inp.beautify();
     }
