@@ -1,8 +1,8 @@
 #[macro_use]
 extern crate serde_json;
+extern crate base64;
 extern crate hex;
 extern crate urlencoding;
-extern crate base64;
 
 struct UserIn {
     inp: String,
